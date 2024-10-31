@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""FIFO caching"""
+"""LIFO caching"""
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """
-    FIFOCache that inherits from BaseCaching
+    LIFOCache that inherits from BaseCaching
     and is a caching system
     """
     def __init__(self):
-        """Initializes the FIFOCache Class"""
+        """Initializes the LIFOCache Class"""
         super().__init__()
+        self.queue = []
 
     def put(self, key, item):
         """
@@ -20,12 +21,14 @@ class FIFOCache(BaseCaching):
         if (key is None) or (item is None):
             return
 
+        if key in self.cache_data:
+            self.queue.remove(key)
+        elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+            discard = self.queue.pop()
+            del self.cache_data[discard]
+            print("DISCARD: {}".format(discard))
+        self.queue.append(key)
         self.cache_data[key] = item
-
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            first_item = list(self.cache_data)[0]
-            print(f'DISCARD: {first_item}')
-            self.cache_data.pop(first_item)
 
     def get(self, key):
         """
