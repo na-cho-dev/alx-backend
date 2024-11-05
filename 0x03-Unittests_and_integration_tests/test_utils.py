@@ -9,10 +9,6 @@ from parameterized import parameterized, parameterized_class
 class TestAccessNestedMap(unittest.TestCase):
     """
     Test case for utils.access_nested_map function
-
-    >>> nested_map = {"a": {"b": {"c": 1}}}
-    >>> access_nested_map(nested_map, ["a", "b", "c"])
-    1
     """
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
