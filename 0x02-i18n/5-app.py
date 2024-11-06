@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Setup a basic Flask app in 4-app.py
+Setup a basic Flask app in 5-app.py
 """
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, gettext, _
+import gettext as _
 
 
 class Config(object):
@@ -37,19 +38,21 @@ def get_user():
     login_id = request.args.get('login_as')
     if login_id:
         return users.get(int(login_id))
+
     return None
 
 
 @app.before_request
 def before_request() -> None:
     """
-    _summary_
+    Use the app.before_request decorator to make it be executed
+    before all other functions.
     """
     user = get_user()
     g.user = user
 
 
-@babel.localeselector
+# @babel.localeselector
 def get_locale() -> str:
     """
     Determine the best match with our supported languages.
@@ -60,15 +63,15 @@ def get_locale() -> str:
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-# babel.init_app(app, locale_selector=get_locale)
+babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/')
 def index() -> str:
     """
-    Returns the render of 4-index.html
+    Returns the render of 5-index.html
     """
-    return render_template('4-index.html')
+    return render_template('5-index.html')
 
 
 if __name__ == "__main__":
