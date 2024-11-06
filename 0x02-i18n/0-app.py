@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
+    """Returns the render of 0-index.html"""
     return render_template('0-index.html')
 
 
