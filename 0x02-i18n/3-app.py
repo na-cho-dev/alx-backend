@@ -3,10 +3,10 @@
 Setup a basic Flask app in 3-app.py
 """
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
+from flask_babel import Babel
 
 
-class Config:
+class Config(object):
     """
     Config class for Babel’s default locale ("en")
     and timezone ("UTC").
@@ -18,19 +18,19 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
-
+app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale() -> str:
+def get_locale():
     """
     Determine the best match with our supported languages.
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index() -> str:
     """
     Returns the render of 3-index.html
