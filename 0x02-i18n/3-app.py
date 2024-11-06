@@ -18,6 +18,7 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
 babel = Babel(app)
 
 
@@ -29,7 +30,7 @@ def get_locale() -> str:
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-@app.route('/', methods=['GET'], strict_slashes=False)
+@app.route('/', methods=['GET'])
 def index() -> str:
     """
     Returns the render of 3-index.html
