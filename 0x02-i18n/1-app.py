@@ -3,7 +3,7 @@
 Setup a basic Flask app in 1-app.py
 """
 from flask import Flask, render_template
-from flask_babel import Babel, _
+from flask_babel import Babel
 
 
 class Config:
@@ -21,9 +21,11 @@ app.config.from_object(Config)
 babel = Babel(app)
 
 
-@app.route('/', methods=['GET'])
-def home():
-    """Returns the render of 1-index.html"""
+@app.route('/', methods=['GET'], strict_slashes=False)
+def index() -> str:
+    """
+    Returns the render of 1-index.html
+    """
     return render_template('1-index.html')
 
 
