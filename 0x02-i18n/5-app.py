@@ -3,8 +3,7 @@
 Setup a basic Flask app in 5-app.py
 """
 from flask import Flask, render_template, request, g
-from flask_babel import Babel, gettext, _
-import gettext as _
+from flask_babel import Babel
 
 
 class Config(object):
@@ -63,9 +62,6 @@ def get_locale() -> str:
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-# babel.init_app(app, locale_selector=get_locale)
-
-
 @app.route('/')
 def index() -> str:
     """
@@ -75,4 +71,7 @@ def index() -> str:
 
 
 if __name__ == "__main__":
+    """
+    Run the app
+    """
     app.run(debug=True, port=3000)
